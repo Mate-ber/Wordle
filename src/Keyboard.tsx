@@ -4,22 +4,26 @@ const keyboard = [
   ["z", "x", "c", "v", "b", "n", "m"],
 ]
 
-const Keyboard: React.FC = () => {
+const Keyboard: React.FC<{
+  getState: (letter: string) => string
+}> = ({ getState }) => {
   return (
     <div>
-      {keyboard.map((keys, index) => (
+      {keyboard.map((row, index) => (
         <div key={index}>
-          {keys.map((key) => (
+          {row.map((letter) => (
             <span
-              key={key}
+              key={letter}
               style={{
                 display: "inline-block",
                 border: "1px solid black",
                 margin: "0.25em",
                 padding: "0.25em",
+                color: "white",
+                background: getState(letter),
               }}
             >
-              {key}
+              {letter}
             </span>
           ))}
         </div>
