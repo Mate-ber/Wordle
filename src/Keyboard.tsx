@@ -1,3 +1,5 @@
+import styles from "./Keyboard.module.css"
+
 const keyboard = [
   ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
   ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
@@ -17,21 +19,15 @@ const Keyboard: React.FC<{
   }
 
   return (
-    <div>
+    <div className={styles.keyboard}>
       {keyboard.map((row, index) => (
-        <div key={index}>
+        <div key={index} className={styles.row}>
           {row.map((letter) => (
             <span
               key={letter}
+              className={styles.key}
               onClick={() => handleClick(letter)}
-              style={{
-                display: "inline-block",
-                border: "1px solid black",
-                margin: "0.25em",
-                padding: "0.25em",
-                color: "white",
-                background: getState(letter),
-              }}
+              style={{ background: getState(letter), color: "white" }}
             >
               {letter}
             </span>
@@ -43,7 +39,3 @@ const Keyboard: React.FC<{
 }
 
 export default Keyboard
-
-// ',.pyfgcrl
-// aoeuidhtns-
-// ;qjkxbmwvz

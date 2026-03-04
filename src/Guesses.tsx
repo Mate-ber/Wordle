@@ -1,4 +1,5 @@
 import { type State } from "./logic"
+import styles from "./Guesses.module.css"
 
 const NUM_GUESSES = 6
 const WORD_LENGTH = 5
@@ -16,21 +17,16 @@ const Guesses: React.FC<{
   }
 
   return (
-    <div>
+    <div className={styles.board}>
       {rows.map((word, rowIndex) => (
-        <div key={rowIndex}>
+        <div key={rowIndex} className={styles.row}>
           {word.split("").map((letter, colIndex) => (
             <span
               key={colIndex}
-              style={{
-                display: "inline-block",
-                margin: "0.25em",
-                padding: "0.25em",
-                color: "white",
-                background: getState(letter, colIndex),
-              }}
+              className={styles.tile}
+              style={{ background: getState(letter, colIndex) }}
             >
-              {letter === " " ? "_" : letter}
+              {letter === " " ? "" : letter}
             </span>
           ))}
         </div>
