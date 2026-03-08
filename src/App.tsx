@@ -1,10 +1,20 @@
 import { useEffect, useState } from "react"
+import { Link, Route, Routes } from "react-router-dom"
 
-import Guesses from "./Guesses"
-import Keyboard from "./Keyboard"
-import { type State, addLetter, createState, deleteLetter, getLetterState, submitGuess } from "./logic"
+import Guesses from "./game/Guesses.tsx"
+import Keyboard from "./game/Keyboard.tsx"
+import LeaderboardList from "./leaderboard/LeaderboardList.tsx"
+import LeaderboardDetail from "./leaderboard/LeaderboardDetail.tsx"
+import {
+  type State,
+  addLetter,
+  createState,
+  deleteLetter,
+  getLetterState,
+  submitGuess,
+} from "./game/logic.ts"
 
-const App: React.FC = () => {
+const Game: React.FC = () => {
   const [state, setState] = useState<State>()
 
   useEffect(() => {
@@ -43,6 +53,22 @@ const App: React.FC = () => {
         onDelete={() => setState((s) => s && deleteLetter(s))}
         onSubmit={() => setState((s) => s && submitGuess(s))}
       />
+    </>
+  )
+}
+
+const App: React.FC = () => {
+  return (
+    <>
+      <nav>
+        <Link to="/">Game</Link>
+        <Link to="/leaderboard">Leaderboard</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Game />} />
+        <Route path="/leaderboard" element={<LeaderboardList />} />
+        <Route path="/leaderboard/:id" element={<LeaderboardDetail />} />
+      </Routes>
     </>
   )
 }

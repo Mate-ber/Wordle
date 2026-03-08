@@ -1,10 +1,6 @@
 body {
     background: #f9f9f9;
     color: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
     margin: 0;
 }
 
@@ -12,7 +8,30 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    min-height: 100vh;
+}
+
+nav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    padding: 12px 0;
+    border-bottom: 1px solid #d3d6da;
+    margin-bottom: 16px;
+}
+
+nav a {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    color: #000;
+}
+
+nav a:hover {
+    color: #538d4e;
 }
 
 button {

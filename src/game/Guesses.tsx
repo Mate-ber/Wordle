@@ -1,4 +1,4 @@
-import { type State } from "./logic"
+import { type State } from "./logic.ts"
 import styles from "./Guesses.module.css"
 
 const NUM_GUESSES = 6
