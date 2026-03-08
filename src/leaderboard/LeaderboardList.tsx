@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { getGames } from "./leaderboarddata.ts"
+import { getGames } from "./leaderboardData.ts"
 import styles from "./Leaderboardlist.module.css"
 
 const LeaderboardList: React.FC = () => {
