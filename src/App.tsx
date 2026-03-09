@@ -3,8 +3,6 @@ import { Link, Route, Routes } from "react-router-dom"
 
 import Guesses from "./game/Guesses.tsx"
 import Keyboard from "./game/Keyboard.tsx"
-import LeaderboardList from "./leaderboard/LeaderboardList.tsx"
-import LeaderboardDetail from "./leaderboard/LeaderboardDetail.tsx"
 import {
   type State,
   addLetter,
@@ -13,6 +11,8 @@ import {
   getLetterState,
   submitGuess,
 } from "./game/logic.ts"
+import LeaderboardDetail from "./leaderboard/LeaderboardDetail.tsx"
+import LeaderboardList from "./leaderboard/LeaderboardList.tsx"
 
 const Game: React.FC = () => {
   const [state, setState] = useState<State>()

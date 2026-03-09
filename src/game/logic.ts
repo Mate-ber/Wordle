@@ -24,7 +24,7 @@ export function createState(): State {
 
 function scoreGuess(guess: string, word: string): string[] {
   const result: string[] = Array(word.length).fill(states.unknown)
-  const remaining: (string | null)[] = word.split("")
+  const remaining: Array<string | null> = word.split("")
 
   for (let i = 0; i < word.length; i++) {
     if (guess[i] === word[i]) {

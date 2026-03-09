@@ -1,5 +1,5 @@
-import { type State } from "./logic.ts"
 import styles from "./Guesses.module.css"
+import { type State } from "./logic.ts"
 
 const NUM_GUESSES = 6
 const WORD_LENGTH = 5

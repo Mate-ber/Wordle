@@ -1,8 +1,9 @@
-import { describe, it, expect } from "vitest"
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
-import LeaderboardList from "./LeaderboardList"
+import { describe, it, expect } from "vitest"
+
 import { getGames } from "./leaderboardData.ts"
+import LeaderboardList from "./LeaderboardList"
 
 describe("LeaderboardList", () => {
   it("renders a heading", () => {

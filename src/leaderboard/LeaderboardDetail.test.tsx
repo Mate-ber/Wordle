@@ -1,8 +1,9 @@
-import { describe, it, expect } from "vitest"
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter, Route, Routes } from "react-router-dom"
-import LeaderboardDetail from "./LeaderboardDetail"
+import { describe, it, expect } from "vitest"
+
 import { getGame } from "./leaderboardData.ts"
+import LeaderboardDetail from "./LeaderboardDetail"
 
 const renderWithId = (id: string) =>
   render(
@@ -20,7 +21,8 @@ describe("LeaderboardDetail", () => {
   })
 
   it("renders top 10 scores", () => {
-    const game = getGame("wordlish")!
+    const game = getGame("wordlish")
+    if (!game) throw new Error("Game not found")
     renderWithId("wordlish")
     for (const entry of game.scores.slice(0, 10)) {
       expect(screen.getByText(entry.name)).toBeInTheDocument()
