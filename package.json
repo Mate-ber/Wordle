@@ -9,6 +9,7 @@
     "lint-eslint": "eslint .",
     "lint-prettier": "prettier --check .",
     "lint-depcheck": "depcheck .",
+    "test": "vitest",
     "dev": "vite",
     "build": "vite build"
   },

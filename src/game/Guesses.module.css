@@ -1,24 +1,24 @@
 .board {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
 }
 
 .row {
-    display: flex;
-    gap: 5px;
+  display: flex;
+  gap: 5px;
 }
 
 .tile {
-    width: 62px;
-    height: 62px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.8rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    border: 2px solid #d3d6da;
-    color: white;
+  width: 62px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 2px solid #d3d6da;
+  color: white;
 }

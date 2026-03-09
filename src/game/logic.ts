@@ -62,7 +62,7 @@ export function getLetterState(
   const priority: Record<string, number> = {
     [states.correct]: 2,
     [states.present]: 1,
-    [states.unknown]: 0
+    [states.unknown]: 0,
   }
 
   let best = states.unknown
@@ -80,14 +80,15 @@ export function getLetterState(
 }
 
 export function addLetter(state: State, letter: string): State {
-  if (state.gameOver || state.currentGuess.length >= state.word.length) return state
+  if (state.gameOver || state.currentGuess.length >= state.word.length)
+    return state
 
   return {
     word: state.word,
     guesses: state.guesses,
     currentGuess: state.currentGuess + letter,
     gameOver: state.gameOver,
-    won: state.won
+    won: state.won,
   }
 }
 
@@ -99,12 +100,13 @@ export function deleteLetter(state: State): State {
     guesses: state.guesses,
     currentGuess: state.currentGuess.slice(0, -1),
     gameOver: state.gameOver,
-    won: state.won
+    won: state.won,
   }
 }
 
 export function submitGuess(state: State): State {
-  if (state.gameOver || state.currentGuess.length !== state.word.length) return state
+  if (state.gameOver || state.currentGuess.length !== state.word.length)
+    return state
 
   const newGuesses = [...state.guesses, state.currentGuess]
   const won = state.currentGuess === state.word
@@ -115,6 +117,6 @@ export function submitGuess(state: State): State {
     guesses: newGuesses,
     currentGuess: "",
     gameOver: gameOver,
-    won: won
+    won: won,
   }
 }

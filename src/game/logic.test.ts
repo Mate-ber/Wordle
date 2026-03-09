@@ -121,5 +121,4 @@ describe("getLetterState", () => {
     s = submitGuess(s)
     expect(getLetterState(s, firstLetter, 0)).toBe("#538d4e")
   })
-
 })

@@ -3,7 +3,6 @@ import { render } from "@testing-library/react"
 import Guesses from "./Guesses"
 import { createState, addLetter, submitGuess } from "./logic"
 
-
 describe("Guesses", () => {
   it("renders 6 rows", () => {
     const state = createState()
