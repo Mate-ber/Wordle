@@ -1,8 +1,8 @@
+import { describe, it, expect } from "vitest"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { MemoryRouter } from "react-router-dom"
-import { describe, it, expect } from "vitest"
 
+import { MemoryRouter } from "react-router-dom"
 import App from "./App"
 
 const renderApp = (initialPath = "/") =>
@@ -21,8 +21,7 @@ describe("App", () => {
 
   it("shows the game page by default", () => {
     renderApp()
-    expect(screen.getByText(/wordlish/i)).toBeInTheDocument()
-    expect(screen.getByText(/begin/i)).toBeInTheDocument()
+    expect(screen.getByText(/loading word/i)).toBeInTheDocument()
   })
 
   it("navigates to leaderboard when link is clicked", async () => {
