@@ -1,21 +1,53 @@
 import { useEffect, useState } from "react"
 import { Link, Route, Routes } from "react-router-dom"
+import { ErrorBoundary } from "react-error-boundary"
 
-import Guesses from "./game/Guesses.tsx"
-import Keyboard from "./game/Keyboard.tsx"
 import {
   type State,
   addLetter,
-  createState,
   deleteLetter,
   getLetterState,
   submitGuess,
-} from "./game/logic.ts"
-import LeaderboardDetail from "./leaderboard/LeaderboardDetail.tsx"
-import LeaderboardList from "./leaderboard/LeaderboardList.tsx"
+} from "./game/logic"
+import { useWord } from "./game/useWord"
+import Guesses from "./game/Guesses"
+import Keyboard from "./game/Keyboard"
+import LeaderboardList from "./leaderboard/LeaderboardList"
+import LeaderboardDetail from "./leaderboard/LeaderboardDetail"
+
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) return error.message
+  return "Something went wrong"
+}
+
+const GameWrapper: React.FC = () => {
+  return (
+    <ErrorBoundary
+      fallbackRender={({ error, resetErrorBoundary }) => (
+        <>
+          <div>{getErrorMessage(error)}</div>
+          <button onClick={() => resetErrorBoundary()}>Retry</button>
+        </>
+      )}
+    >
+      <Game />
+    </ErrorBoundary>
+  )
+}
+
+function makeState(word: string): State {
+  return { word, guesses: [], currentGuess: "", gameOver: false, won: false }
+}
 
 const Game: React.FC = () => {
-  const [state, setState] = useState<State>()
+  const [wordData, { loading, refresh: refreshWord }] = useWord()
+  const [state, setState] = useState<State | undefined>(undefined)
+
+  useEffect(() => {
+    if (wordData?.word) {
+      setState(makeState(wordData.word))
+    }
+  }, [wordData?.word])
 
   useEffect(() => {
     if (!state) return
@@ -29,20 +61,28 @@ const Game: React.FC = () => {
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [state])
 
-  if (!state) {
-    return (
-      <>
-        <h1>Wordlish</h1>
-        <button onClick={() => setState(createState())}>Begin</button>
-      </>
-    )
+  if (loading || !state) return <div>Loading word...</div>
+
+  const handleNewGame = () => {
+    setState(undefined)
+    refreshWord()
   }
 
   return (
     <>
       <h1>Wordlish</h1>
-      {state.won && <p>You won!</p>}
-      {state.gameOver && !state.won && <p>The word was: {state.word}</p>}
+      {state.won && (
+        <>
+          <p>You won!</p>
+          <button onClick={handleNewGame}>Play again</button>
+        </>
+      )}
+      {state.gameOver && !state.won && (
+        <>
+          <p>The word was: {state.word}</p>
+          <button onClick={handleNewGame}>Play again</button>
+        </>
+      )}
       <Guesses
         state={state}
         getState={(letter, position) => getLetterState(state, letter, position)}
@@ -65,7 +105,7 @@ const App: React.FC = () => {
         <Link to="/leaderboard">Leaderboard</Link>
       </nav>
       <Routes>
-        <Route path="/" element={<Game />} />
+        <Route path="/" element={<GameWrapper />} />
         <Route path="/leaderboard" element={<LeaderboardList />} />
         <Route path="/leaderboard/:id" element={<LeaderboardDetail />} />
       </Routes>
