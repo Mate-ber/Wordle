@@ -1,4 +1,5 @@
 import useAsync from "../shared/useAsync"
+
 import { getWord, type Word } from "./api"
 
 export type { Word }

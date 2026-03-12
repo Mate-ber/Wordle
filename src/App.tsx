@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
-import { Link, Route, Routes } from "react-router-dom"
 import { ErrorBoundary } from "react-error-boundary"
+import { Link, Route, Routes } from "react-router-dom"
 
+import Guesses from "./game/Guesses"
+import Keyboard from "./game/Keyboard"
 import {
   type State,
   addLetter,
@@ -10,10 +12,8 @@ import {
   submitGuess,
 } from "./game/logic"
 import { useWord } from "./game/useWord"
-import Guesses from "./game/Guesses"
-import Keyboard from "./game/Keyboard"
-import LeaderboardList from "./leaderboard/LeaderboardList"
 import LeaderboardDetail from "./leaderboard/LeaderboardDetail"
+import LeaderboardList from "./leaderboard/LeaderboardList"
 
 function getErrorMessage(error: unknown): string {
   if (error instanceof Error) return error.message
