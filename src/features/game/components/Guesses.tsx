@@ -1,12 +1,13 @@
+import { type GameState, type LetterStatus } from "../../../types"
+
 import styles from "./Guesses.module.css"
-import { type State } from "./logic.ts"
 
 const NUM_GUESSES = 6
 const WORD_LENGTH = 5
 
 const Guesses: React.FC<{
-  state: State
-  getState: (letter: string, position: number) => string
+  state: GameState
+  getState: (letter: string, position: number) => LetterStatus
 }> = ({ state, getState }) => {
   const rows: string[] = state.guesses.slice()
   if (!state.gameOver) {

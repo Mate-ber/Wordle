@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom"
 
+import { useLeaderboardContext } from "../context/useLeaderboardContext"
+
 import styles from "./LeaderboardList.module.css"
-import { useLeaderboardContext } from "./useLeaderboardContext"
 
 const LeaderboardList: React.FC = () => {
   const { games, loading } = useLeaderboardContext()

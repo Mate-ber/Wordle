@@ -1,9 +1,9 @@
 import { createContext } from "react"
 
-import { type State } from "./logic"
+import { type GameState } from "../../../types"
 
 export type GameContextValue = {
-  state: State | undefined
+  state: GameState | undefined
   loading: boolean
   addLetter: (letter: string) => void
   deleteLetter: () => void

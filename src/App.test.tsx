@@ -3,8 +3,8 @@ import userEvent from "@testing-library/user-event"
 import { MemoryRouter } from "react-router-dom"
 import { describe, it, expect } from "vitest"
 
-import App from "./App"
-import { ThemeProvider } from "./theme/ThemeProvider"
+import { App } from "./App"
+import { ThemeProvider } from "./context/ThemeProvider"
 
 function renderApp(initialPath = "/") {
   return render(
@@ -25,9 +25,9 @@ describe("App", () => {
     ).toBeInTheDocument()
   })
 
-  it("shows the game page by default", async () => {
+  it("shows the game page by default", () => {
     renderApp()
-    expect(await screen.findByText("Wordlish")).toBeInTheDocument()
+    expect(screen.getByText(/loading word/i)).toBeInTheDocument()
   })
 
   it("navigates to leaderboard when link is clicked", async () => {

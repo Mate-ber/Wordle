@@ -1,14 +1,6 @@
-export type Score = {
-  rank: number
-  name: string
-  score: number
-}
+import { type Game, type Score } from "../../../types"
 
-export type Game = {
-  id: string
-  name: string
-  scores: Score[]
-}
+export type { Game, Score }
 
 const games: Game[] = [
   {
@@ -73,4 +65,9 @@ export function getTopScores(id: string, limit: number): Score[] {
   const game = getGame(id)
   if (!game) return []
   return game.scores.slice(0, limit)
+}
+
+export async function fetchLeaderboard(): Promise<Game[]> {
+  await new Promise((resolve) => setTimeout(resolve, 800))
+  return getGames()
 }

@@ -1,7 +1,8 @@
 import { Link, useParams } from "react-router-dom"
 
+import { useLeaderboardContext } from "../context/useLeaderboardContext"
+
 import styles from "./LeaderboardDetail.module.css"
-import { useLeaderboardContext } from "./useLeaderboardContext"
 
 const LeaderboardDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>()

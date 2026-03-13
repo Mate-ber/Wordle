@@ -1,29 +1,25 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 
-import { GameContext } from "./GameContext"
+import { type GameState } from "../../../types"
+import { useWord } from "../api/useWord"
 import {
-  type State,
   addLetter as addLetterFn,
+  createState,
   deleteLetter as deleteLetterFn,
   submitGuess as submitGuessFn,
-} from "./logic"
-import { useWord } from "./useWord"
+} from "../utils/gameUtils"
 
-export { getLetterState } from "./logic"
-
-function makeState(word: string): State {
-  return { word, guesses: [], currentGuess: "", gameOver: false, won: false }
-}
+import { GameContext } from "./GameContext"
 
 export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [wordData, { loading, refresh: refreshWord }] = useWord()
-  const [state, setState] = useState<State | undefined>(undefined)
+  const [state, setState] = useState<GameState | undefined>(undefined)
 
   useEffect(() => {
     if (wordData?.word) {
-      setState(makeState(wordData.word))
+      setState(createState(wordData.word))
     }
   }, [wordData?.word])
 

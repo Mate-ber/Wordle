@@ -1,3 +1,5 @@
+import { type LetterStatus } from "../../../types"
+
 import styles from "./Keyboard.module.css"
 
 const keyboard = [
@@ -7,7 +9,7 @@ const keyboard = [
 ]
 
 const Keyboard: React.FC<{
-  getState: (letter: string) => string
+  getState: (letter: string) => LetterStatus
   onLetter: (letter: string) => void
   onDelete: () => void
   onSubmit: () => void

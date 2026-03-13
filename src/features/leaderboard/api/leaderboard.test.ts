@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest"
 
-import { getGames, getGame, getTopScores } from "./leaderboardData.ts"
+import { getGames, getGame, getTopScores } from "./leaderboard"
 
 describe("getGames", () => {
   it("returns an array of games", () => {

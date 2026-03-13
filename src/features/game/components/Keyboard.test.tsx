@@ -2,13 +2,15 @@ import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, it, expect, vi } from "vitest"
 
+import { LetterStatus } from "../../../types"
+
 import Keyboard from "./Keyboard"
 
 describe("Keyboard", () => {
   it("renders all letter keys", () => {
     render(
       <Keyboard
-        getState={() => "#d3d6da"}
+        getState={() => LetterStatus.Unknown}
         onLetter={vi.fn()}
         onDelete={vi.fn()}
         onSubmit={vi.fn()}
@@ -22,7 +24,7 @@ describe("Keyboard", () => {
   it("renders Enter and Backspace keys", () => {
     render(
       <Keyboard
-        getState={() => "#d3d6da"}
+        getState={() => LetterStatus.Unknown}
         onLetter={vi.fn()}
         onDelete={vi.fn()}
         onSubmit={vi.fn()}
@@ -36,7 +38,7 @@ describe("Keyboard", () => {
     const onLetter = vi.fn()
     render(
       <Keyboard
-        getState={() => "#d3d6da"}
+        getState={() => LetterStatus.Unknown}
         onLetter={onLetter}
         onDelete={vi.fn()}
         onSubmit={vi.fn()}
@@ -46,11 +48,11 @@ describe("Keyboard", () => {
     expect(onLetter).toHaveBeenCalledWith("a")
   })
 
-  it("calls onDelete when backspace key is clicked", async () => {
+  it("calls onDelete when Backspace key is clicked", async () => {
     const onDelete = vi.fn()
     render(
       <Keyboard
-        getState={() => "#d3d6da"}
+        getState={() => LetterStatus.Unknown}
         onLetter={vi.fn()}
         onDelete={onDelete}
         onSubmit={vi.fn()}
@@ -64,7 +66,7 @@ describe("Keyboard", () => {
     const onSubmit = vi.fn()
     render(
       <Keyboard
-        getState={() => "#d3d6da"}
+        getState={() => LetterStatus.Unknown}
         onLetter={vi.fn()}
         onDelete={vi.fn()}
         onSubmit={onSubmit}

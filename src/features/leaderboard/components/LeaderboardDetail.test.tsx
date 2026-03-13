@@ -2,9 +2,10 @@ import { render, screen } from "@testing-library/react"
 import { MemoryRouter, Route, Routes } from "react-router-dom"
 import { describe, it, expect } from "vitest"
 
-import { getGames } from "./leaderboardData"
+import { getGames } from "../api/leaderboard"
+import { LeaderboardProvider } from "../context/LeaderboardProvider"
+
 import LeaderboardDetail from "./LeaderboardDetail"
-import { LeaderboardProvider } from "./LeaderboardProvider"
 
 function renderDetail(id: string) {
   return render(

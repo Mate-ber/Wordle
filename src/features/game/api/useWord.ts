@@ -1,6 +1,7 @@
-import useAsync from "../shared/useAsync"
+import useAsync from "../../../shared/useAsync"
 
-import { getWord, type Word } from "./api"
+import { getWord } from "./word"
+import { type Word } from "./word"
 
 export type { Word }
 
