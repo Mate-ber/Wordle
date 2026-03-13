@@ -1,7 +1,29 @@
 body {
-  background: #f9f9f9;
-  color: #000;
   margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  transition:
+    background 0.2s,
+    color 0.2s;
+  font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+body[data-theme="light"] {
+  --bg: #f9f9f9;
+  --text: #000000;
+  --border: #d3d6da;
+  --card-bg: #ffffff;
+  --score-row-bg: #f3f3f3;
+  --link-color: #000000;
+}
+
+body[data-theme="dark"] {
+  --bg: #121213;
+  --text: #ffffff;
+  --border: #3a3a3c;
+  --card-bg: #1a1a1b;
+  --score-row-bg: #2a2a2b;
+  --link-color: #ffffff;
 }
 
 #root {
@@ -15,9 +37,10 @@ nav {
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 24px;
   padding: 12px 0;
-  border-bottom: 1px solid #d3d6da;
+  border-bottom: 1px solid var(--border);
   margin-bottom: 16px;
 }
 
@@ -27,7 +50,7 @@ nav a {
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.05rem;
-  color: #000;
+  color: var(--link-color);
 }
 
 nav a:hover {

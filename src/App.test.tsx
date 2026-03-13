@@ -1,40 +1,47 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-
 import { MemoryRouter } from "react-router-dom"
 import { describe, it, expect } from "vitest"
 
 import App from "./App"
+import { ThemeProvider } from "./theme/ThemeProvider"
 
-const renderApp = (initialPath = "/") =>
-  render(
-    <MemoryRouter initialEntries={[initialPath]}>
-      <App />
-    </MemoryRouter>,
+function renderApp(initialPath = "/") {
+  return render(
+    <ThemeProvider>
+      <MemoryRouter initialEntries={[initialPath]}>
+        <App />
+      </MemoryRouter>
+    </ThemeProvider>,
   )
+}
 
 describe("App", () => {
   it("renders the nav with Game and Leaderboard links", () => {
     renderApp()
-    expect(screen.getByText(/^game$/i)).toBeInTheDocument()
-    expect(screen.getByText(/^leaderboard$/i)).toBeInTheDocument()
+    expect(screen.getByRole("link", { name: /game/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole("link", { name: /leaderboard/i }),
+    ).toBeInTheDocument()
   })
 
-  it("shows the game page by default", () => {
+  it("shows the game page by default", async () => {
     renderApp()
-    expect(screen.getByText(/loading word/i)).toBeInTheDocument()
+    expect(await screen.findByText("Wordlish")).toBeInTheDocument()
   })
 
   it("navigates to leaderboard when link is clicked", async () => {
     renderApp()
-    await userEvent.click(screen.getByRole("link", { name: /^leaderboard$/i }))
-    expect(screen.getAllByText(/wordlish/i).length).toBeGreaterThan(0)
+    await userEvent.click(screen.getByRole("link", { name: /leaderboard/i }))
+    expect(
+      await screen.findByRole("heading", { name: /leaderboard/i }),
+    ).toBeInTheDocument()
   })
 
-  it("renders leaderboard list at /leaderboard", () => {
+  it("renders leaderboard list at /leaderboard", async () => {
     renderApp("/leaderboard")
     expect(
-      screen.getByRole("heading", { name: /leaderboard/i }),
+      await screen.findByRole("heading", { name: /leaderboard/i }),
     ).toBeInTheDocument()
   })
 })

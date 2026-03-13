@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom"
 
-import { getGames } from "./leaderboardData.ts"
-import styles from "./Leaderboardlist.module.css"
+import styles from "./LeaderboardList.module.css"
+import { useLeaderboardContext } from "./useLeaderboardContext"
 
 const LeaderboardList: React.FC = () => {
-  const games = getGames()
+  const { games, loading } = useLeaderboardContext()
+
+  if (loading || !games) return <div>Loading leaderboard...</div>
 
   return (
     <div className={styles.page}>
@@ -14,7 +16,7 @@ const LeaderboardList: React.FC = () => {
           <div key={game.id} className={styles.card}>
             <div className={styles.cardHeader}>
               <h3>{game.name}</h3>
-              <Link to={`/leaderboard/${game.id}`} className={styles.link}>
+              <Link to={game.id} className={styles.link}>
                 See all →
               </Link>
             </div>

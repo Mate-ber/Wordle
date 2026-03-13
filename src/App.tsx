@@ -1,19 +1,18 @@
-import { useEffect, useState } from "react"
+import DarkModeIcon from "@mui/icons-material/DarkMode"
+import LightModeIcon from "@mui/icons-material/LightMode"
+import IconButton from "@mui/material/IconButton"
+import { useEffect } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { Link, Route, Routes } from "react-router-dom"
 
+import { GameProvider, getLetterState } from "./game/GameProvider"
 import Guesses from "./game/Guesses"
 import Keyboard from "./game/Keyboard"
-import {
-  type State,
-  addLetter,
-  deleteLetter,
-  getLetterState,
-  submitGuess,
-} from "./game/logic"
-import { useWord } from "./game/useWord"
+import { useGameContext } from "./game/useGameContext"
 import LeaderboardDetail from "./leaderboard/LeaderboardDetail"
 import LeaderboardList from "./leaderboard/LeaderboardList"
+import { LeaderboardProvider } from "./leaderboard/LeaderboardProvider"
+import { useTheme } from "./theme/useTheme"
 
 function getErrorMessage(error: unknown): string {
   if (error instanceof Error) return error.message
@@ -30,43 +29,29 @@ const GameWrapper: React.FC = () => {
         </>
       )}
     >
-      <Game />
+      <GameProvider>
+        <Game />
+      </GameProvider>
     </ErrorBoundary>
   )
 }
 
-function makeState(word: string): State {
-  return { word, guesses: [], currentGuess: "", gameOver: false, won: false }
-}
-
 const Game: React.FC = () => {
-  const [wordData, { loading, refresh: refreshWord }] = useWord()
-  const [state, setState] = useState<State | undefined>(undefined)
+  const { state, addLetter, deleteLetter, submitGuess, newGame, loading } =
+    useGameContext()
 
   useEffect(() => {
-    if (wordData?.word) {
-      setState(makeState(wordData.word))
-    }
-  }, [wordData?.word])
-
-  useEffect(() => {
-    if (!state) return
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Enter") setState((s) => s && submitGuess(s))
-      else if (e.key === "Backspace") setState((s) => s && deleteLetter(s))
+      if (e.key === "Enter") submitGuess()
+      else if (e.key === "Backspace") deleteLetter()
       else if (e.key.length === 1 && e.key >= "a" && e.key <= "z")
-        setState((s) => s && addLetter(s, e.key.toLowerCase()))
+        addLetter(e.key.toLowerCase())
     }
     window.addEventListener("keydown", onKeyDown)
     return () => window.removeEventListener("keydown", onKeyDown)
-  }, [state])
+  }, [addLetter, deleteLetter, submitGuess])
 
   if (loading || !state) return <div>Loading word...</div>
-
-  const handleNewGame = () => {
-    setState(undefined)
-    refreshWord()
-  }
 
   return (
     <>
@@ -74,13 +59,13 @@ const Game: React.FC = () => {
       {state.won && (
         <>
           <p>You won!</p>
-          <button onClick={handleNewGame}>Play again</button>
+          <button onClick={newGame}>Play again</button>
         </>
       )}
       {state.gameOver && !state.won && (
         <>
           <p>The word was: {state.word}</p>
-          <button onClick={handleNewGame}>Play again</button>
+          <button onClick={newGame}>Play again</button>
         </>
       )}
       <Guesses
@@ -89,25 +74,49 @@ const Game: React.FC = () => {
       />
       <Keyboard
         getState={(letter) => getLetterState(state, letter)}
-        onLetter={(letter) => setState((s) => s && addLetter(s, letter))}
-        onDelete={() => setState((s) => s && deleteLetter(s))}
-        onSubmit={() => setState((s) => s && submitGuess(s))}
+        onLetter={addLetter}
+        onDelete={deleteLetter}
+        onSubmit={submitGuess}
       />
     </>
   )
 }
 
+const LeaderboardWrapper: React.FC = () => {
+  return (
+    <ErrorBoundary
+      fallbackRender={({ error, resetErrorBoundary }) => (
+        <>
+          <div>{getErrorMessage(error)}</div>
+          <button onClick={() => resetErrorBoundary()}>Retry</button>
+        </>
+      )}
+    >
+      <LeaderboardProvider>
+        <Routes>
+          <Route path="/" element={<LeaderboardList />} />
+          <Route path=":id" element={<LeaderboardDetail />} />
+        </Routes>
+      </LeaderboardProvider>
+    </ErrorBoundary>
+  )
+}
+
 const App: React.FC = () => {
+  const { mode, toggleTheme } = useTheme()
+
   return (
     <>
       <nav>
         <Link to="/">Game</Link>
         <Link to="/leaderboard">Leaderboard</Link>
+        <IconButton onClick={toggleTheme} color="inherit">
+          {mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
+        </IconButton>
       </nav>
       <Routes>
         <Route path="/" element={<GameWrapper />} />
-        <Route path="/leaderboard" element={<LeaderboardList />} />
-        <Route path="/leaderboard/:id" element={<LeaderboardDetail />} />
+        <Route path="/leaderboard/*" element={<LeaderboardWrapper />} />
       </Routes>
     </>
   )

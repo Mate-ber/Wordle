@@ -1,11 +1,15 @@
 import { Link, useParams } from "react-router-dom"
 
-import { getGame } from "./leaderboardData.ts"
-import styles from "./Leaderboarddetail.module.css"
+import styles from "./LeaderboardDetail.module.css"
+import { useLeaderboardContext } from "./useLeaderboardContext"
 
 const LeaderboardDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>()
-  const game = id ? getGame(id) : undefined
+  const { games, loading } = useLeaderboardContext()
+
+  if (loading || !games) return <div>Loading...</div>
+
+  const game = games.find((g) => g.id === id)
 
   if (!game) {
     return (

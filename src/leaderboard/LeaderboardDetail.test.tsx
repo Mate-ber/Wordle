@@ -2,40 +2,48 @@ import { render, screen } from "@testing-library/react"
 import { MemoryRouter, Route, Routes } from "react-router-dom"
 import { describe, it, expect } from "vitest"
 
-import { getGame } from "./leaderboardData.ts"
+import { getGames } from "./leaderboardData"
 import LeaderboardDetail from "./LeaderboardDetail"
+import { LeaderboardProvider } from "./LeaderboardProvider"
 
-const renderWithId = (id: string) =>
-  render(
-    <MemoryRouter initialEntries={[`/leaderboard/${id}`]}>
-      <Routes>
-        <Route path="/leaderboard/:id" element={<LeaderboardDetail />} />
-      </Routes>
-    </MemoryRouter>,
+function renderDetail(id: string) {
+  return render(
+    <LeaderboardProvider>
+      <MemoryRouter initialEntries={[`/leaderboard/${id}`]}>
+        <Routes>
+          <Route path="/leaderboard/:id" element={<LeaderboardDetail />} />
+        </Routes>
+      </MemoryRouter>
+    </LeaderboardProvider>,
   )
+}
 
 describe("LeaderboardDetail", () => {
-  it("renders the game name", () => {
-    renderWithId("wordlish")
-    expect(screen.getByText(/wordlish/i)).toBeInTheDocument()
+  const game = getGames()[0]
+
+  it("renders the game name", async () => {
+    renderDetail(game.id)
+    expect(
+      await screen.findByText(new RegExp(game.name, "i")),
+    ).toBeInTheDocument()
   })
 
-  it("renders top 10 scores", () => {
-    const game = getGame("wordlish")
-    if (!game) throw new Error("Game not found")
-    renderWithId("wordlish")
+  it("renders top 10 scores", async () => {
+    renderDetail(game.id)
     for (const entry of game.scores.slice(0, 10)) {
-      expect(screen.getByText(entry.name)).toBeInTheDocument()
+      expect(await screen.findByText(entry.name)).toBeInTheDocument()
     }
   })
 
-  it("renders a back link", () => {
-    renderWithId("wordlish")
-    expect(screen.getByText(/back/i)).toBeInTheDocument()
+  it("renders a back link", async () => {
+    renderDetail(game.id)
+    expect(
+      await screen.findByRole("link", { name: /back/i }),
+    ).toBeInTheDocument()
   })
 
-  it("shows not found message for unknown game", () => {
-    renderWithId("unknown-game")
-    expect(screen.getByText(/not found/i)).toBeInTheDocument()
+  it("shows not found message for unknown game", async () => {
+    renderDetail("unknown-game-id")
+    expect(await screen.findByText(/not found/i)).toBeInTheDocument()
   })
 })

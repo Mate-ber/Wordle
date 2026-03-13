@@ -2,53 +2,47 @@ import { render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
 import { describe, it, expect } from "vitest"
 
-import { getGames } from "./leaderboardData.ts"
+import { getGames } from "./leaderboardData"
 import LeaderboardList from "./LeaderboardList"
+import { LeaderboardProvider } from "./LeaderboardProvider"
+
+function renderList() {
+  return render(
+    <LeaderboardProvider>
+      <MemoryRouter>
+        <LeaderboardList />
+      </MemoryRouter>
+    </LeaderboardProvider>,
+  )
+}
 
 describe("LeaderboardList", () => {
-  it("renders a heading", () => {
-    render(
-      <MemoryRouter>
-        <LeaderboardList />
-      </MemoryRouter>,
-    )
-    expect(screen.getByText(/leaderboard/i)).toBeInTheDocument()
+  it("renders a heading", async () => {
+    renderList()
+    expect(await screen.findByText(/leaderboard/i)).toBeInTheDocument()
   })
 
-  it("renders a card for each game", () => {
+  it("renders a card for each game", async () => {
+    renderList()
     const games = getGames()
-    render(
-      <MemoryRouter>
-        <LeaderboardList />
-      </MemoryRouter>,
-    )
     for (const game of games) {
-      expect(screen.getByText(game.name)).toBeInTheDocument()
+      expect(await screen.findByText(game.name)).toBeInTheDocument()
     }
   })
 
-  it("shows top 3 scores per game", () => {
-    render(
-      <MemoryRouter>
-        <LeaderboardList />
-      </MemoryRouter>,
-    )
+  it("shows top 3 scores per game", async () => {
+    renderList()
     const games = getGames()
     for (const game of games) {
-      const top3 = game.scores.slice(0, 3)
-      for (const entry of top3) {
-        expect(screen.getAllByText(entry.name).length).toBeGreaterThan(0)
+      for (const entry of game.scores.slice(0, 3)) {
+        expect(await screen.findByText(entry.name)).toBeInTheDocument()
       }
     }
   })
 
-  it("renders 'See all' links pointing to detail pages", () => {
-    render(
-      <MemoryRouter>
-        <LeaderboardList />
-      </MemoryRouter>,
-    )
-    const links = screen.getAllByText(/see all/i)
+  it("renders 'See all' links pointing to detail pages", async () => {
+    renderList()
+    const links = await screen.findAllByText(/see all/i)
     expect(links.length).toBe(getGames().length)
   })
 })
