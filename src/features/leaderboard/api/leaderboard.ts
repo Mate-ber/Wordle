@@ -1,4 +1,4 @@
-import { type Game, type Score } from "../../../types"
+import { type Game, type Score } from "../../../shared/types"
 
 export type { Game, Score }
 

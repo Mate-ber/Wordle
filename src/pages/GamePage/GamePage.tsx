@@ -1,11 +1,11 @@
 import { useEffect } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 
-import Guesses from "../features/game/components/Guesses"
-import Keyboard from "../features/game/components/Keyboard"
-import { GameProvider } from "../features/game/context/GameProvider"
-import { useGameContext } from "../features/game/context/useGameContext"
-import { getLetterState } from "../features/game/utils/gameUtils"
+import Guesses from "../../features/game/components/Guesses"
+import Keyboard from "../../features/game/components/Keyboard"
+import { GameProvider } from "../../features/game/context/GameProvider"
+import { useGameContext } from "../../features/game/context/useGameContext"
+import { getLetterState } from "../../features/game/utils/gameUtils"
 
 import styles from "./GamePage.module.css"
 

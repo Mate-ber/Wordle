@@ -1,4 +1,4 @@
-import { type GameState, type LetterStatus } from "../../../types"
+import { type GameState, type LetterStatus } from "../../../../shared/types"
 
 import styles from "./Guesses.module.css"
 

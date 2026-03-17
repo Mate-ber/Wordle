@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest"
 
-import { LetterStatus } from "../../../types"
+import { LetterStatus } from "../../../shared/types"
 
 import {
   createState,

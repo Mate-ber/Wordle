@@ -9,6 +9,43 @@ A Wordle-inspired game built with React, TypeScript, and Material UI. Guess the 
 - Reveals the word on loss and prompts to play again
 - Can browse top scores across multiple game modes with a detail view
 
+## Potential Features
+
+- Hard mode (must use correct letters in subsequent guesses)
+- Daily word mode
+- Score submission after winning
+- Animated tile flipping
+
+## Architecture Overview
+
+```
+src/
+  features/
+    game/             # Core Wordle game feature
+      api/            # Word fetching
+      components/
+        Guesses/      # Guess board modlet
+        Keyboard/     # On-screen keyboard modlet
+      context/        # GameContext, GameProvider, useGameContext
+      utils/          # gameUtils
+    leaderboard/      # Leaderboard feature
+      api/            # leaderboard.ts, useLeaderboard.ts
+      components/
+        LeaderboardList/    # List of games modlet
+        LeaderboardDetail/  # Detail view modlet
+      context/        # LeaderboardContext, LeaderboardProvider
+  layouts/
+    MainLayout/       # Nav bar with theme toggle
+  pages/
+    GamePage/         # Main game view
+    LeaderboardPage/  # Leaderboard with nested routes
+  context/
+    Theme/            # ThemeContext, ThemeProvider, useTheme
+  shared/
+    types.ts          # Shared TypeScript types
+    useAsync.ts       # Reusable async hook
+```
+
 # Getting Started
 
 ## Prerequisites

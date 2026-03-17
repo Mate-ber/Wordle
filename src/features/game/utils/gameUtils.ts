@@ -1,4 +1,4 @@
-import { LetterStatus, type GameState } from "../../../types"
+import { LetterStatus, type GameState } from "../../../shared/types"
 
 export function createState(word: string): GameState {
   return {

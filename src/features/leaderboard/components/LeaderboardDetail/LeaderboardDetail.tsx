@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom"
 
-import { useLeaderboardContext } from "../context/useLeaderboardContext"
+import { useLeaderboardContext } from "../../context/useLeaderboardContext"
 
 import styles from "./LeaderboardDetail.module.css"
 

@@ -1,6 +1,6 @@
 import { createContext } from "react"
 
-import { type Game } from "../../../types"
+import { type Game } from "../../../shared/types"
 
 export type LeaderboardContextValue = {
   games: Game[] | undefined

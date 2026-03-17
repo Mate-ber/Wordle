@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react"
 import { describe, it, expect } from "vitest"
 
-import { LetterStatus } from "../../../types"
-import { createState, addLetter, submitGuess } from "../utils/gameUtils"
+import { LetterStatus } from "../../../../shared/types"
+import { createState, addLetter, submitGuess } from "../../utils/gameUtils"
 
 import Guesses from "./Guesses"
 

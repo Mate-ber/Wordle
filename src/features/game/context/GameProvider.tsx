@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 
-import { type GameState } from "../../../types"
+import { type GameState } from "../../../shared/types"
 import { useWord } from "../api/useWord"
 import {
   addLetter as addLetterFn,

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-import { useLeaderboardContext } from "../context/useLeaderboardContext"
+import { useLeaderboardContext } from "../../context/useLeaderboardContext"
 
 import styles from "./LeaderboardList.module.css"
 

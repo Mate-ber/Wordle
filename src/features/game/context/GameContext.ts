@@ -1,6 +1,6 @@
 import { createContext } from "react"
 
-import { type GameState } from "../../../types"
+import { type GameState } from "../../../shared/types"
 
 export type GameContextValue = {
   state: GameState | undefined

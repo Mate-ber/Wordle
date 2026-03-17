@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
 import { describe, it, expect } from "vitest"
 
-import { ThemeProvider } from "../context/ThemeProvider"
+import { ThemeProvider } from "../../context/Theme/ThemeProvider"
 
 import { GamePage } from "./GamePage"
 

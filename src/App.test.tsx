@@ -4,7 +4,7 @@ import { MemoryRouter } from "react-router-dom"
 import { describe, it, expect } from "vitest"
 
 import { App } from "./App"
-import { ThemeProvider } from "./context/ThemeProvider"
+import { ThemeProvider } from "./context/Theme/ThemeProvider"
 
 function renderApp(initialPath = "/") {
   return render(

@@ -1,4 +1,4 @@
-import { type LetterStatus } from "../../../types"
+import { type LetterStatus } from "../../../../shared/types"
 
 import styles from "./Keyboard.module.css"
 
